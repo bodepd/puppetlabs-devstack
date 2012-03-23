@@ -20,12 +20,12 @@ class devstack(
 ) {
 
   require git
-  require screen
+
+  package { 'screen': }
 
   vcsrepo { '/var/lib/devstack':
     ensure   => 'present',
     source   => "${git_protocol}://github.com/cloudbuilders/devstack.git",
-    revision => 'origin/stable-diablo',
     provider => 'git',
     require  => Class['git'],
   }
