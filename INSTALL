@@ -1,0 +1,30 @@
+to install:
+run the puppet module
+
+# set additional variable http_proxy=http://10.0.0.2:2138
+install devstack
+
+source openrc
+
+source /opt/stack/glance/tools/nova_to_os_env.sh
+
+import a real image
+
+- verify that you can authenticate with glance:
+
+glance --username=admin --password=password index list
+ (be sure to specify username and password)
+
+log into horizon, and do the following:
+
+- add icmp and ssh (tcp 22) access
+- import a public key
+
+get an image that Puppet can be installed on:
+
+ wget -N http://uec-images.ubuntu.com/oneiric/current/oneiric-server-cloudimg-amd64.tar.gz
+
+glance add disk_format=aki container_format=aki name=oneiric_kernel --username=admin --password=password < /vagrant/images/oneiric-server-cloudimg-amd64-vmlinuz-virtual
+
+glance --username=admin --password=password add name=oneiric_kernel disk_format=aki continainer_format-aki < oneiric-server-cloudimg-amd64-vmlinuz-virtual
+glance --username=admin --password=password add name=oneiric_image disk_format=ami container_format=ami kernel_id=<ID> is_public=True < oneiric-server-cloudimg-amd64.img
